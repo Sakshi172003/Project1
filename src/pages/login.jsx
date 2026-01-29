@@ -7,8 +7,21 @@ function Login({ onLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    email === "admin@gmail.com" && password === "123456" ? onLogin()
-    : setError("Invalid email or password");
+    const storedUser = JSON.parse(localStorage.getItem("userData"));
+
+    if (!storedUser){
+      setError("No registered user found. Please register first.");
+      return;
+    
+    }
+    if (email === storedUser.email &&
+        password === storedUser.password)
+     {
+      onLogin();
+      
+    }else {
+      setError("Invalid email or password.")
+    }
     };
 
     return (
